@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export STORAGE_URL=https://oneseismicdev.blob.core.windows.net
+./fetch -R localhost:6379

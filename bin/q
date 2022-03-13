@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export STORAGE_URL=https://oneseismicdev.blob.core.windows.net
+./query
