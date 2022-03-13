@@ -20,7 +20,7 @@ type opts struct {
 
 func parseopts() opts {
 	help := getopt.BoolLong("help", 0, "print this help text")
-	opts := opts {
+	opts := opts{
 		broker:  os.Getenv("BROKER"),
 		signkey: os.Getenv("SIGN_KEY"),
 	}
@@ -29,7 +29,7 @@ func parseopts() opts {
 		&opts.signkey,
 		"sign-key",
 		0,
-		"Signing key used for response authorization tokens. " +
+		"Signing key used for response authorization tokens. "+
 			"Must match signing key in api/query",
 		"key",
 	)
@@ -55,11 +55,11 @@ func main() {
 	opts := parseopts()
 
 	keyring := auth.MakeKeyring([]byte(opts.signkey))
-	result  := api.Result {
+	result := api.Result{
 		Timeout: time.Second * 15,
-		Storage: redis.NewClient(&redis.Options {
+		Storage: redis.NewClient(&redis.Options{
 			Addr: opts.broker,
-			DB: 0,
+			DB:   0,
 		}),
 		Keyring: &keyring,
 	}
@@ -71,5 +71,5 @@ func main() {
 	results.GET("/:pid", result.Get)
 	results.GET("/:pid/stream", result.Stream)
 	results.GET("/:pid/status", result.Status)
-	app.Run(":8080")
+	app.Run(":8081")
 }
