@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd core_build
+make
+cd ..
+ar x core_build/liboneseismic.a
+
+
