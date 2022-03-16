@@ -17,6 +17,46 @@ JNIEXPORT jlong JNICALL Java_oneseismic_DecoderJNI_create_1decoder
 
 /*
  * Class:     oneseismic_DecoderJNI
+ * Method:    buffer_and_process
+ * Signature: (J[BI)V
+ */
+JNIEXPORT void JNICALL Java_oneseismic_DecoderJNI_buffer_1and_1process
+  (JNIEnv *, jobject, jlong, jbyteArray, jint);
+
+/*
+ * Class:     oneseismic_DecoderJNI
+ * Method:    header
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_oneseismic_DecoderJNI_header
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     oneseismic_DecoderJNI
+ * Method:    header_attributes
+ * Signature: (J)[Ljava/lang/String;
+ */
+JNIEXPORT jobjectArray JNICALL Java_oneseismic_DecoderJNI_header_1attributes
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     oneseismic_DecoderJNI
+ * Method:    header_shape
+ * Signature: (J)[I
+ */
+JNIEXPORT jintArray JNICALL Java_oneseismic_DecoderJNI_header_1shape
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     oneseismic_DecoderJNI
+ * Method:    register_writer
+ * Signature: (JLjava/lang/String;Ljava/nio/ByteBuffer;)V
+ */
+JNIEXPORT void JNICALL Java_oneseismic_DecoderJNI_register_1writer
+  (JNIEnv *, jobject, jlong, jstring, jobject);
+
+/*
+ * Class:     oneseismic_DecoderJNI
  * Method:    status
  * Signature: (J)V
  */

@@ -1,5 +1,13 @@
 #!/bin/bash
 
+set -e
+ONESEIS_HOME=/home/thannant/development/equinor/oneseismic/
+
+cd core_build
+make
+cd ..
+ar x core_build/liboneseismic.a
+
 g++ -c -fPIC -I${ONESEIS_HOME}/core/include -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux oneseismic_DecoderJNI.cpp -o decoder.o
 
 g++ -shared -fPIC -o libdecoder.so decoder.o decoder.cpp.o
