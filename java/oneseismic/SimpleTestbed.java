@@ -93,46 +93,20 @@ public class SimpleTestbed {
             HttpResponse<InputStream> sresponse = httpClient.send(cube_request, HttpResponse.BodyHandlers.ofInputStream());
             InputStream data_stream = sresponse.body();
 
-            DecoderJNI dec = new DecoderJNI();
-            byte buf[] = new byte[10240];
-
-            int[] shape=null;
-            String[] attrs;
-            int r;
-            System.out.println("Start read");
-            for (r = data_stream.read(buf);r!=-1;r = data_stream.read(buf)) {
-                dec.process(buf,r);
+            SimpleDecoder simple_dec = new SimpleDecoder();
+            if (simple_dec.process(data_stream))  {
                 
-                attrs = dec.getAttr();
-                if (attrs != null) {
-                    shape = dec.getShape();
-                    break;
+                float[] result = simple_dec.getData();
+                int[] shape = simple_dec.getShape();
+                int row_width =shape[2];
+                for (int i=result.length-row_width;i<result.length;i++) {
+                    System.out.println(i+" "+result[i]);
                 }
-            }
-            System.out.println("Got header");
-            int total_size=1;
-            for (int i = 0; i < shape.length; i++) {
-                total_size=total_size *shape[i];
+            } else {
+                System.err.println("Unable to process result");
             }
             
-
-            ByteBuffer buffer = ByteBuffer.allocateDirect(total_size*4);
-            dec.setWriter("data",buffer);
-            for (r = data_stream.read(buf);r!=-1;r = data_stream.read(buf)) {
-                dec.process(buf,r);
-            }
-            System.out.println("Fin read");
-            FloatBuffer fb = buffer.order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer();
-                        
-            float[] result = new float[total_size];
-            for(int i=0;i<result.length;i++) {
-                result[i] = fb.get(i);
-            }
-
-            for (int f=0;f<1251;f++) {
-                    System.out.println(result[f]);
-            }
-          }
+        }
         catch (Exception e)
             {
                 e.printStackTrace();
